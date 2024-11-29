@@ -1,0 +1,51 @@
+:root {
+  --primary-color: #007bff;
+  --primary-hover-color: #0056b3;
+  --text-primary-color: #333;
+  --secondary-color: #dbc961;
+  --secondary-hover-color: #e4cc47;
+  --text-secondary-color: #000000;
+  --accent-color: #ff6b6b;
+  --accent-hover-color: #ff5353;
+  --text-accent-color: #555;
+  --background-color: #fff;
+  --border-color: #ccc;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background-color);
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
+  color: var(--text-primary-color);
+  line-height: 1.6;
+  min-height: 100vh;
+  margin-top: 80px;
+  padding: 0 20px;
+}
+
+h1 {
+  color: var(--text-primary-color);
+}
+
+h2 {
+  color: var(--text-secondary-color);
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
