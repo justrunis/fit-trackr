@@ -1,0 +1,50 @@
+.step-calculator {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    color: var(--text-secondary-color);
+    border-radius: 8px;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.input-grid {
+    display: flex;
+    gap: 0.5rem;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input, select {
+    padding: 5px;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #333;
+}
