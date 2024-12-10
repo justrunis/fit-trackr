@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import "./CalorieCalculator.css";
-import Input from "../UI/Input";
-import Button from "../UI/Button";
-import Select from "../UI/Select";
+import {
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -77,58 +85,93 @@ const CalorieCalculator = () => {
   };
 
   return (
-    <div className="card">
-      <h1>Calorie Calculator</h1>
-      <div className="input-grid">
-        <Input
-          label="Weight (kg):"
-          type="number"
-          value={userData.weight}
-          onChange={handleInputChange}
-          placeholder="e.g., 70"
-          name="weight"
-        />
-        <Input
-          label="Height (cm):"
-          type="number"
-          value={userData.height}
-          onChange={handleInputChange}
-          placeholder="e.g., 175"
-          name="height"
-        />
-        <Input
-          label="Age (years):"
-          type="number"
-          value={userData.age}
-          onChange={handleInputChange}
-          placeholder="e.g., 25"
-          name="age"
-        />
-      </div>
+    <Card>
+      <CardContent>
+        <Typography variant="h5" gutterBottom>
+          Calorie Calculator
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Weight (kg)"
+              type="number"
+              value={userData.weight}
+              onChange={handleInputChange}
+              placeholder="e.g., 70"
+              name="weight"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Height (cm)"
+              type="number"
+              value={userData.height}
+              onChange={handleInputChange}
+              placeholder="e.g., 175"
+              name="height"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Age (years)"
+              type="number"
+              value={userData.age}
+              onChange={handleInputChange}
+              placeholder="e.g., 25"
+              name="age"
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                name="gender"
+                value={userData.gender}
+                onChange={handleInputChange}
+                label="Gender"
+              >
+                {genderOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id="activity-level-label">Activity Level</InputLabel>
+              <Select
+                label="Activity Level"
+                name="activityLevel"
+                value={userData.activityLevel}
+                onChange={handleInputChange}
+              >
+                {activityLevelOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>{" "}
+          <Grid item xs={12}>
+            <Button variant="contained" fullWidth onClick={calculateCalories}>
+              Calculate Total Calories
+            </Button>
+          </Grid>
+        </Grid>
 
-      <div className="input-grid">
-        <Select
-          label="Gender"
-          name="gender"
-          value={userData.gender}
-          options={genderOptions}
-          onChange={handleInputChange}
-        />
-        <Select
-          label="Activity Level"
-          name="activityLevel"
-          value={userData.activityLevel}
-          options={activityLevelOptions}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <Button onClick={calculateCalories}>Calculate Total Calories</Button>
-      </div>
-      <div className="result">
-        <h2>Total Daily Calories Needed: {caloriesBurned.toFixed(2)} kcal</h2>
-      </div>
-    </div>
+        {caloriesBurned > 0 && (
+          <Typography variant="h6" component="h3">
+            Total Daily Calories Needed: {caloriesBurned.toFixed(2)} kcal
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

@@ -1,8 +1,17 @@
-import Input from "../UI/Input";
-import Select from "../UI/Select";
-import Button from "../UI/Button";
 import { useState } from "react";
-import "./StepCalculator.css";
+import {
+  Card,
+  CardContent,
+  TextField,
+  Button,
+  Grid,
+  Box,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Typography,
+} from "@mui/material";
 
 export default function StepCalculator() {
   const [formData, setFormData] = useState({
@@ -12,7 +21,6 @@ export default function StepCalculator() {
     distance: null,
   });
 
-  // Function to handle changes to any input field
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,7 +29,6 @@ export default function StepCalculator() {
     }));
   };
 
-  // Function to handle distance calculation
   const calculateDistance = () => {
     const { steps, height, gender } = formData;
 
@@ -44,44 +51,67 @@ export default function StepCalculator() {
   };
 
   return (
-    <div className="step-calculator">
-      <h2>Steps to Kilometers Calculator</h2>
-      <div className="input-grid">
-        <Input
-          label="Number of steps"
-          type="number"
-          name="steps"
-          value={formData.steps}
-          onChange={handleInputChange}
-        />
+    <Card>
+      <CardContent>
+        <Typography variant="h5" gutterBottom>
+          Steps to Kilometers Calculator
+        </Typography>
 
-        <Input
-          label="Height (in cm)"
-          type="number"
-          name="height"
-          value={formData.height}
-          onChange={handleInputChange}
-        />
-      </div>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Number of steps"
+              type="number"
+              fullWidth
+              name="steps"
+              value={formData.steps}
+              onChange={handleInputChange}
+              variant="outlined"
+            />
+          </Grid>
 
-      <Select
-        label="Gender"
-        name="gender"
-        value={formData.gender}
-        onChange={handleInputChange}
-        options={[
-          { value: "male", label: "Male" },
-          { value: "female", label: "Female" },
-        ]}
-      />
-      <div>
-        <Button onClick={calculateDistance}>Calculate Distance</Button>
-      </div>
-      {formData.distance !== null && (
-        <div>
-          <h3>Total Distance: {formData.distance.toFixed(2)} km</h3>
-        </div>
-      )}
-    </div>
+          <Grid item xs={12}>
+            <TextField
+              label="Height (in cm)"
+              type="number"
+              fullWidth
+              name="height"
+              value={formData.height}
+              onChange={handleInputChange}
+              variant="outlined"
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                label="Gender"
+              >
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" fullWidth onClick={calculateDistance}>
+              Calculate Distance
+            </Button>
+          </Grid>
+        </Grid>
+
+        {formData.distance !== null && formData.distance > 0 && (
+          <Box sx={{ marginTop: 2 }}>
+            <Typography variant="h6">
+              Total Distance: {formData.distance.toFixed(2)} km
+            </Typography>
+          </Box>
+        )}
+      </CardContent>
+    </Card>
   );
 }
