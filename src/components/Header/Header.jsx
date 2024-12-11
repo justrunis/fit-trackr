@@ -14,9 +14,12 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import NavLinks from "./NavLinks";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ onClick, themeMode, handleThemeToggle }) {
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => {
     setOpenDrawer(open);
@@ -26,7 +29,12 @@ export default function Header() {
     <Box>
       <AppBar position="fixed" sx={{ top: 0 }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1 }}
+            onClick={() => navigate("/")}
+            color="primary"
+          >
             Fitness Trackr
           </Typography>
 
@@ -42,7 +50,11 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-            <NavLinks />
+            <NavLinks
+              onClick={onClick}
+              themeMode={themeMode}
+              handleThemeToggle={handleThemeToggle}
+            />
           </Box>
         </Toolbar>
       </AppBar>
@@ -61,7 +73,11 @@ export default function Header() {
 
         <List>
           <ListItem>
-            <NavLinks onClick={() => toggleDrawer(false)} />
+            <NavLinks
+              onClick={onClick}
+              themeMode={themeMode}
+              handleThemeToggle={handleThemeToggle}
+            />
           </ListItem>
         </List>
       </Drawer>
