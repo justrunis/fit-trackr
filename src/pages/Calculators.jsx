@@ -1,11 +1,10 @@
-import React from "react";
 import { Container, Grid } from "@mui/material";
 
 import CalorieCalculator from "../components/Calculators/CalorieCalculator";
 import StepCalculator from "../components/Calculators/StepCalculator";
 import BMICalculator from "../components/Calculators/BMICalculator";
 
-export default function Dashboard() {
+export default function Calculators() {
   return (
     <Container>
       <Grid container spacing={3} justifyContent="center">

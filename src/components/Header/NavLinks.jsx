@@ -29,16 +29,25 @@ const NavLinks = ({ onClick }) => (
       onClick={onClick}
       sx={navLinkStyle}
     >
-      Nutrients
+      Calory calculator
     </Button>
     <Button
       color="inherit"
       component={NavLink}
-      to="/contact"
+      to="/exercises"
       onClick={onClick}
       sx={navLinkStyle}
     >
-      Contact
+      Exercises
+    </Button>
+    <Button
+      color="inherit"
+      component={NavLink}
+      to="/calculators"
+      onClick={onClick}
+      sx={navLinkStyle}
+    >
+      Calculators
     </Button>
   </>
 );

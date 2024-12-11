@@ -25,14 +25,14 @@ export async function getNaturalNutrients({ search }) {
   return data;
 }
 
-export async function getExercises({ muscles, type, difficulty }) {
+export async function getExercises({ muscle, type, difficulty }) {
   const options = {
     method: "GET",
     headers: {
       "X-Api-Key": import.meta.env.VITE_EXERCISE_KEY,
     },
   };
-  const URL = `${EXCERCIES_URL}?muscle=${muscles}&type=${type}&difficulty=${difficulty}`;
+  const URL = `${EXCERCIES_URL}?muscle=${muscle}&type=${type}&difficulty=${difficulty}`;
 
   const response = await fetch(URL, options);
   const data = await response.json();
