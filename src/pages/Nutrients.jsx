@@ -8,12 +8,17 @@ import {
   Button,
   IconButton,
   CircularProgress,
+  Grid,
+  Paper,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getNaturalNutrients } from "../api/http";
 import ErrorIndicator from "../components/UI/ErrorIndicator";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import SearchIcon from "@mui/icons-material/Search";
+import { makeFirstLetterUpperCase } from "../utils/formatting";
 
 export default function Nutrients() {
   const [inputValue, setInputValue] = useState(""); // Input controlled state
@@ -37,6 +42,14 @@ export default function Nutrients() {
     setFoods((prevFoods) => [...prevFoods, { ...currentFood, quantity }]);
   };
 
+  const handleDelete = (index) => {
+    setFoods((prevFoods) => {
+      const newFoods = [...prevFoods];
+      newFoods.splice(index, 1);
+      return newFoods;
+    });
+  };
+
   return (
     <Container>
       <Box
@@ -57,7 +70,8 @@ export default function Nutrients() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setQuery(inputValue)} // Set query to trigger search
+          startIcon={<SearchIcon />}
+          onClick={() => (setQuantity(1), setQuery(inputValue))} // Set query to trigger search
         >
           Search
         </Button>
@@ -86,39 +100,102 @@ export default function Nutrients() {
         >
           <Card
             sx={{
-              width: "80%",
+              width: "100%",
               maxWidth: 600,
               padding: 2,
               display: "flex",
-              flexDirection: "column",
+              flexDirection: { xs: "column", md: "row" }, // Column on mobile, row on desktop
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "space-between",
+              gap: 2, // Space between elements
+              boxShadow: 3, // Adds a subtle shadow for better visibility
             }}
           >
-            <img src={food?.photo?.thumb} alt={food?.food_name} />
-            <Typography variant="h4" gutterBottom>
-              {food?.food_name}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {food?.nf_calories} Calories
-            </Typography>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            {/* Image Section */}
+            <img
+              src={food?.photo?.thumb}
+              alt={food?.food_name}
+              style={{
+                width: "100%",
+                maxWidth: "150px",
+                height: "150px",
+                borderRadius: "8px",
+                objectFit: "cover",
+              }}
+            />
+
+            {/* Food Info Section */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                textAlign: { xs: "center", md: "left" },
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: { xs: "1.25rem", md: "1.5rem" },
+                  fontWeight: 600,
+                }}
+                gutterBottom
+              >
+                {makeFirstLetterUpperCase(food?.food_name)}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: { xs: "1rem", md: "1.125rem" },
+                  color: "text.secondary",
+                }}
+                gutterBottom
+              >
+                {food?.nf_calories} Calories
+              </Typography>
+            </Box>
+
+            {/* Quantity Controls */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mt: { xs: 2, md: 0 },
+              }}
+            >
               <IconButton
                 onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+                size="small"
               >
                 <RemoveIcon />
               </IconButton>
-              <Typography variant="body1" gutterBottom>
+              <Typography
+                variant="body1"
+                sx={{
+                  mx: 1,
+                  fontSize: { xs: "1rem", md: "1.25rem" },
+                }}
+              >
                 {quantity}
               </Typography>
-              <IconButton onClick={() => setQuantity(quantity + 1)}>
+              <IconButton
+                onClick={() => setQuantity(quantity + 1)}
+                size="small"
+              >
                 <AddIcon />
               </IconButton>
             </Box>
+
+            {/* Add Button */}
             <Button
               variant="contained"
               color="primary"
-              onClick={() => handleAdd({ ...food })}
+              sx={{
+                width: { xs: "100%", md: "auto" },
+                mt: { xs: 2, md: 0 },
+              }}
+              onClick={() => handleAdd({ ...food, quantity })}
             >
               Add
             </Button>
@@ -127,41 +204,101 @@ export default function Nutrients() {
       )}
 
       {foods.length > 0 && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Card
+        <Box sx={{ p: 2 }}>
+          <Grid
+            container
+            spacing={2}
             sx={{
-              width: "80%",
-              maxWidth: 600,
-              padding: 2,
+              display: "flex",
+              justifyContent: "start",
+            }}
+          >
+            {foods.map((food, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md: "row" },
+                    alignItems: "center",
+                    p: 2,
+                    gap: 1,
+                  }}
+                >
+                  <img
+                    src={food?.photo?.thumb}
+                    alt={food?.food_name}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      ml: { xs: 0, md: 2 },
+                      mt: { xs: 2, md: 0 },
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: { xs: "1rem", md: "1.25rem" },
+                        fontWeight: 600,
+                      }}
+                    >
+                      {makeFirstLetterUpperCase(food?.food_name)} (
+                      {food?.quantity})
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: { xs: "0.875rem", md: "1rem" },
+                      }}
+                    >
+                      {food?.nf_calories * food?.quantity} Total Calories
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleDelete(index)}
+                  >
+                    <DeleteForeverIcon />
+                  </Button>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Paper
+            sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
+              p: 2,
+              mt: 2,
+              gap: 2,
+              boxShadow: 3,
             }}
           >
-            <Typography variant="h4" gutterBottom>
-              Added Foods
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
+                fontWeight: 600,
+                mt: 2,
+              }}
+            >
+              Total Calories:{" "}
+              {foods.reduce(
+                (acc, food) => acc + food.nf_calories * food.quantity,
+                0
+              )}
             </Typography>
-            {foods.map((food, index) => (
-              <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
-                {console.log(foods)}
-                <img src={food?.photo?.thumb} alt={food?.food_name} />
-                <Typography variant="body1" gutterBottom>
-                  {food?.food_name}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {food?.nf_calories * food?.quantity} Total Calories
-                </Typography>
-              </Box>
-            ))}
-          </Card>
+          </Paper>
         </Box>
       )}
     </Container>

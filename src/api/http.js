@@ -2,11 +2,8 @@ import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
-const URL = "https://trackapi.nutritionix.com/v2";
-
-const defaultHeaders = {
-  "Content-Type": "application/json",
-};
+const NUTRITIONIX_URL = "https://trackapi.nutritionix.com/v2";
+const EXCERCIES_URL = "https://api.api-ninjas.com/v1/exercises";
 
 export async function getNaturalNutrients({ search }) {
   const options = {
@@ -23,7 +20,21 @@ export async function getNaturalNutrients({ search }) {
 
   console.log(options);
 
-  const response = await fetch(`${URL}/natural/nutrients`, options);
+  const response = await fetch(`${NUTRITIONIX_URL}/natural/nutrients`, options);
+  const data = await response.json();
+  return data;
+}
+
+export async function getExercises({ muscles, type, difficulty }) {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-Api-Key": import.meta.env.VITE_EXERCISE_KEY,
+    },
+  };
+  const URL = `${EXCERCIES_URL}?muscle=${muscles}&type=${type}&difficulty=${difficulty}`;
+
+  const response = await fetch(URL, options);
   const data = await response.json();
   return data;
 }
