@@ -50,6 +50,15 @@ export default function StepCalculator() {
     }));
   };
 
+  const resetCalculator = () => {
+    setFormData({
+      steps: "",
+      height: "",
+      gender: "male",
+      distance: null,
+    });
+  };
+
   return (
     <Card>
       <CardContent>
@@ -98,9 +107,25 @@ export default function StepCalculator() {
           </Grid>
 
           <Grid item xs={12}>
-            <Button variant="contained" fullWidth onClick={calculateDistance}>
-              Calculate Distance
-            </Button>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={calculateDistance}
+              >
+                Calculate
+              </Button>
+              {formData.distance !== null && formData.distance > 0 && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={resetCalculator}
+                >
+                  Reset
+                </Button>
+              )}
+            </Box>
           </Grid>
         </Grid>
 

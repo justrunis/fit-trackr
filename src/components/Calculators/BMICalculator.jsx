@@ -127,7 +127,7 @@ export default function BMICalculator() {
                 color="primary"
                 onClick={calculateBMI}
               >
-                Calculate BMI
+                Calculate
               </Button>
               {formData.bmi && (
                 <Button

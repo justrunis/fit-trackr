@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Button,
   Card,
+  Box,
   CardContent,
   FormControl,
   Grid,
@@ -41,6 +42,17 @@ const CalorieCalculator = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const resetCalculator = () => {
+    setUserData({
+      weight: 0,
+      height: 0,
+      age: 0,
+      gender: "male",
+      activityLevel: "sedentary",
+    });
+    setCaloriesBurned(0);
   };
 
   const calculateCalories = () => {
@@ -157,11 +169,27 @@ const CalorieCalculator = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>{" "}
+          </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" fullWidth onClick={calculateCalories}>
-              Calculate Total Calories
-            </Button>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={calculateCalories}
+              >
+                Calculate
+              </Button>
+              {caloriesBurned > 0 && (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={resetCalculator}
+                >
+                  Reset
+                </Button>
+              )}
+            </Box>
           </Grid>
         </Grid>
 
