@@ -12,6 +12,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import GaugeMeter from "./GaugeMeter";
 
 export default function BMICalculator() {
   const [formData, setFormData] = useState({
@@ -74,6 +75,9 @@ export default function BMICalculator() {
       <CardContent>
         <Typography variant="h5" gutterBottom>
           BMI Calculator
+        </Typography>
+        <Typography variant="body2" sx={{ marginBottom: 2 }} gutterBottom>
+          Calculate your Body Mass Index (BMI) to understand your health status
         </Typography>
 
         <Grid container spacing={2}>
@@ -144,10 +148,13 @@ export default function BMICalculator() {
 
         {formData.bmi && (
           <Box sx={{ marginTop: 3 }}>
-            <Typography variant="h6">Your BMI: {formData.bmi}</Typography>
-            <Typography variant="body1">
-              Category: {formData.category}
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", textAlign: "center" }}
+            >
+              Your BMI: {formData.bmi}
             </Typography>
+            <GaugeMeter value={formData.bmi} />
           </Box>
         )}
       </CardContent>

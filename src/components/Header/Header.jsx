@@ -15,6 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NavLinks from "./NavLinks";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../public/logo.png";
 
 export default function Header({ onClick, themeMode, handleThemeToggle }) {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -31,11 +32,26 @@ export default function Header({ onClick, themeMode, handleThemeToggle }) {
         <Toolbar>
           <Typography
             variant="h6"
-            sx={{ flexGrow: 1 }}
+            sx={{
+              flexGrow: 1,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
             onClick={() => navigate("/")}
-            color="primary"
+            color="secondary"
           >
-            Fitness Trackr
+            Fit Trackr
+            <img
+              src={logo}
+              alt="logo"
+              style={{
+                width: "30px",
+                height: "40px",
+                marginLeft: "10px",
+                marginTop: "5px",
+              }}
+            />
           </Typography>
 
           {/* Mobile Menu Icon */}

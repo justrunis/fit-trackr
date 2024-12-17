@@ -102,6 +102,10 @@ const CalorieCalculator = () => {
         <Typography variant="h5" gutterBottom>
           Calorie Calculator
         </Typography>
+        <Typography variant="body2" sx={{ marginBottom: 2 }} gutterBottom>
+          Enter your weight, height, age, gender, and activity level to
+          calculate your daily calorie intake.
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField

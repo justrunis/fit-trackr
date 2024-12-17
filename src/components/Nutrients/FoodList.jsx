@@ -48,7 +48,7 @@ export default function FoodList({ foods, handleDelete }) {
                     fontSize: { xs: "0.875rem", md: "1rem" },
                   }}
                 >
-                  {(food?.nf_calories * food?.quantity).toFixed(2)} kCal
+                  {(food?.nf_calories * food?.quantity).toFixed(2)} Cal
                 </Typography>
                 <Button
                   variant="contained"
@@ -86,7 +86,7 @@ export default function FoodList({ foods, handleDelete }) {
           {foods
             .reduce((acc, food) => acc + food.nf_calories * food.quantity, 0)
             .toFixed(2)}{" "}
-          kCal
+          Cal
         </Typography>
       </Paper>
     </>
